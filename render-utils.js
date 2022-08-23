@@ -1,3 +1,5 @@
+import { completeTodo } from "./fetch-utils";
+
 export function renderTodo(todo, handleComplete) {
     // create a div and a p tag
     const div = document.createElement('div');
@@ -19,7 +21,10 @@ export function renderTodo(todo, handleComplete) {
     div.append(p);
 
     // add event listener for click and call handleComplete function
-    div.addEventListener('click', () => handleComplete(todo.id));
+    div.addEventListener('click', () => {
+        completeTodo(todo.id);
+    });
+    
     return div;
     
     // return the div

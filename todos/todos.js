@@ -30,8 +30,8 @@ let todoArr = [];
 
 // 
 // add async complete todo handler function
-async function finishTodo(id) {
-    handleComplete();
+async function completeTodo(id) {
+    completeTodo();
 //  // call completeTodo function
 //  // swap out todo in array with completed todo object (with completed: true)
 
