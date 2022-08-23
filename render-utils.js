@@ -1,4 +1,4 @@
-import { completeTodo } from "./fetch-utils";
+// import { completeTodo } from './fetch-utils.js';
 
 export function renderTodo(todo, handleComplete) {
     // create a div and a p tag
@@ -22,7 +22,8 @@ export function renderTodo(todo, handleComplete) {
 
     // add event listener for click and call handleComplete function
     div.addEventListener('click', () => {
-        completeTodo(todo.id);
+        
+        handleComplete(todo); 
     });
     
     return div;

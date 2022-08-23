@@ -21,59 +21,42 @@ todoForm.addEventListener('submit', async (e) => {
     const formData = new FormData(todoForm);
     const todo = formData.get('todo');
     await createTodo(todo);
+    todos = await getTodos();
     e.target.reset();
     displayTodos();
 });
 
-// create todo state 
-let todoArr = [];
+let todos = [];
 
 // 
 // add async complete todo handler function
-async function completeTodo(id) {
-    completeTodo();
-//  // call completeTodo function
-//  // swap out todo in array with completed todo object (with completed: true)
+async function handleComplete(todo) {
 
-    const todo = todoArr.find(todo => todo.id === id);
-    todo.complete = true;
-    todoArr = todoArr.filter(todo => todo.id !== id);
-    todoArr.push(todo);
+    await completeTodo(todo.id);
+    todos = await getTodos();
     displayTodos();
+
 }
 
-// update the todo in the array
-// render the todo list
-
-
-// call displayTodos
     
 
 async function displayTodos() {
-    // clear the container (.innerHTML = '')
-    const todos = await getTodos(); 
-    todosEl.textContent = '';
     
-    // call render function, pass in state and complete handler function!
+    todosEl.textContent = '';
     for (let todo of todos) {
-        const todoEl = renderTodo(todo);
-
-        todoEl.addEventListener('click', async () => {
-            await completeTodo(todo.id);
-        });
+        const todoEl = renderTodo(todo, handleComplete);
         todosEl.append(todoEl);
     }
 
-    
-        
-        
 }
 
-// add page load function
-window.addEventListener('load', async () => {
-    displayTodos();
-});
 
+async function onLoad() {
+    todos = await getTodos();
+    displayTodos();
+    
+}
+onLoad();
 
 logoutButton.addEventListener('click', () => {
     logout();
@@ -81,9 +64,7 @@ logoutButton.addEventListener('click', () => {
 
 
 deleteButton.addEventListener('click', async () => {
-    // delete all todos
     await deleteAllTodos();
-    // modify state to match new state (empty array)
+    todos = [];
     displayTodos();
-    // re displayTodos
 });
