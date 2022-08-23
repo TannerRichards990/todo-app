@@ -30,16 +30,18 @@ let todoArr = [];
 
 // 
 // add async complete todo handler function
-// async function completeTodo(id)
+async function finishTodo(id) {
+    handleComplete();
 //  // call completeTodo function
-// completeTodo();
 //  // swap out todo in array with completed todo object (with completed: true)
-// if (todos.complete) {
-//     todos[i] = {
-//         todo: todos, 
-//         completed: true,
-//     };
-// }
+
+    const todo = todoArr.find(todo => todo.id === id);
+    todo.complete = true;
+    todoArr = todoArr.filter(todo => todo.id !== id);
+    todoArr.push(todo);
+    displayTodos();
+}
+
 // update the todo in the array
 // render the todo list
 
@@ -68,11 +70,10 @@ async function displayTodos() {
 }
 
 // add page load function
-window.addEventListener('load', displayTodos);
-    // fetch the todos and store in state   
+window.addEventListener('load', async () => {
+    displayTodos();
+});
 
-
-    // call displayTodos
 
 logoutButton.addEventListener('click', () => {
     logout();
@@ -83,8 +84,6 @@ deleteButton.addEventListener('click', async () => {
     // delete all todos
     await deleteAllTodos();
     // modify state to match new state (empty array)
-    todoArr = []; 
-    
     displayTodos();
     // re displayTodos
 });
